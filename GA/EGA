@@ -1,0 +1,20 @@
+clear;clc;   
+load 21-5 
+% load 22-5 
+% load 27-5   
+% load 29-5 
+% load 32-5-1 
+% load 32-5-2 
+% load 36-5 
+% load 20-5-1a2
+% load 20-5-2a2
+% load 20-5-1b2
+% load 20-5-2b2
+% load 50-5-1a2
+% load 50-5-1b2
+% load 50-5-2a2
+% load 50-5-2b2
+
+Num = 40; 
+iter_max = 200;
+D = dis([depot;customer],[depot;customer]);
