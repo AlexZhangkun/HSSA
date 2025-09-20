@@ -1,0 +1,48 @@
+function [route,arrtime] = vrptw(depot,customer,demand,Q,tw,time,DPI)
+    D = dis([depot;customer],[depot;customer]);
+    N = size(customer,1);
+    cust = 2 : N+1;
+    route = [];
+    arrtime = zeros(1,N);
+    while ~isempty(cust)
+        route = [route,1];
+        [~,c] = min(D(1,cust));
+        c = cust(c(1))-1;
+        t = tw(c,2);
+        cust_d = cust-1;
+        q = repmat(Q,1,3);
+        while ~isempty(cust_d)
+            if Cr(demand(c,:) , q) >= DPI
+                if route(end) == 1 
+                    arrtime(c) = tw(c,2);
+                else
+                    arrtime(c) = t + time(route(end),c+1);
+                end
+                route = [route ,c+1];
+                dem = demand(c,:);
+                q = q - dem(end:-1:1);
+                t = t + tw(c,5);
+                cust_d = setdiff(cust_d,c);
+                if isempty(cust_d)
+                    break;
+                else
+                    [~,c] = min(D(c+1,cust_d));
+                    c =cust_d(c(1));
+                end
+            else
+                cust_d = setdiff(cust_d,c);
+                if isempty(cust_d)
+                    break;
+                else
+                    [~,c] = min(D(c+1,cust_d));
+                    c =cust_d(c(1));
+                end
+            end
+        end
+        cust = setdiff(cust,route);
+    end
+end
+                
+                
+
+        
